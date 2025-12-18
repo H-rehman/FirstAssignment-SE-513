@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Tools</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 class="page-title">Calculator</h1>
+
+<div class="container">
+    <div class="calculator">
+        <form>
+            <div class="display">
+                <input type="text" id="display" readonly>
+            </div>
+
+            <div>
+                <input type="button" value="AC" onclick="clearDisplay()">
+                <input type="button" value="DE" onclick="deleteChar()">
+                <input type="button" value="." onclick="appendChar('.')">
+                <input type="button" value="/" onclick="appendChar('/')">
+            </div>
+
+            <div>
+                <input type="button" value="7" onclick="appendChar('7')">
+                <input type="button" value="8" onclick="appendChar('8')">
+                <input type="button" value="9" onclick="appendChar('9')">
+                <input type="button" value="*" onclick="appendChar('*')">
+            </div>
+
+            <div>
+                <input type="button" value="4" onclick="appendChar('4')">
+                <input type="button" value="5" onclick="appendChar('5')">
+                <input type="button" value="6" onclick="appendChar('6')">
+                <input type="button" value="-" onclick="appendChar('-')">
+            </div>
+
+            <div>
+                <input type="button" value="1" onclick="appendChar('1')">
+                <input type="button" value="2" onclick="appendChar('2')">
+                <input type="button" value="3" onclick="appendChar('3')">
+                <input type="button" value="+" onclick="appendChar('+')">
+            </div>
+
+            <div>
+                <input type="button" value="0" onclick="appendChar('0')">
+                <input type="button" value="=" class="equal" onclick="calculate()">
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr>
+
+<h2>Dynamic Table Generator</h2>
+
+<div class="tab">
+    <input type="number" id="rows" placeholder="Rows" value="2">
+    <input type="number" id="cols" placeholder="Columns" value="2">
+
+    <select id="formType">
+        <option value="text">Text</option>
+        <option value="number">Number</option>
+        <option value="checkbox">Checkbox</option>
+        <option value="date">Date</option>
+    </select>
+
+    <button onclick="generateTable()">Generate</button>
+</div>
+
+<div id="tableContainer"></div>
+
+<script>
+const display = document.getElementById("display");
+
+function appendChar(c){ display.value += c; }
+function clearDisplay(){ display.value = ""; }
+function deleteChar(){ display.value = display.value.slice(0,-1); }
+
+function calculate(){
+    try{ display.value = eval(display.value); }
+    catch{ display.value = "Error"; }
+}
+
+function generateTable(){
+    const r = rows.value, c = cols.value;
+    const type = formType.value;
+    tableContainer.innerHTML = "";
+
+    const table = document.createElement("table");
+
+    for(let i=0;i<r;i++){
+        const tr = document.createElement("tr");
+        for(let j=0;j<c;j++){
+            const td = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = type;
+            td.appendChild(input);
+            tr.appendChild(td);
+        }
+        table.appendChild(tr);
+    }
+    tableContainer.appendChild(table);
+}
+</script>
+
+</body>
+</html>
